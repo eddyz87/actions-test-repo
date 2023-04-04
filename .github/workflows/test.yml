@@ -17,8 +17,9 @@ jobs:
           python3 main.py | tee output.txt
       - uses: actions/cache/restore@v3
         with:
-          key: baseline.txt
-          restore-keys: baseline.txt-
+          key: baseline-txt
+          restore-keys: |
+            baseline-txt-
           path: baseline.txt
       - continue-on-error: true
         name: compare output
@@ -27,6 +28,6 @@ jobs:
       - if: ${{ github.event_name == 'push' }}
         uses: actions/cache/save@v3
         with:
-          key: baseline.txt-${{ github.run_id }}
+          key: baseline-txt-${{ github.run_id }}
           path: output.txt
 
