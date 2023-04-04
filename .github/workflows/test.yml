@@ -15,20 +15,18 @@ jobs:
       - name: run it
         run: |
           python3 main.py | tee new-output.txt
-      - uses: actions/cache@v3
+      - uses: actions/cache/restore@v3
         with:
-          key: output.txt
-          path: output.txt
+          key: baseline.txt
+          path: baseline.txt
       - continue-on-error: true
         name: compare output
         run: |
-          if [[ ! -e old-output.txt ]]; then
-            echo [Error] old-output.txt does not exist
-          fi
+          [[ ! -e baseline.txt ]] && echo "[Error] No baseline"
           diff --color=always -pruN output.txt new-output.txt
       - if: ${{ github.event_name == 'push' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/cache/restore@v3
         with:
-          name: output.txt
-          path: new-output.txt
-          if-no-files-found: warn
+          key: baseline.txt
+          path: output.txt
+
