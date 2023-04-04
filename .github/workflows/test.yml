@@ -12,7 +12,10 @@ jobs:
         with:
           python-version: 3.11
       - run: pwd
-      - run: python3 main.py > output.txt
+      - name: run it
+        run: |
+          python3 main.py > output.txt
+          cat output.txt
       - uses: actions/cache@v3
         with:
           key: output.txt
@@ -27,10 +30,8 @@ jobs:
         run: |
           if [[ ! -e old-output.txt ]]; then
             echo [Error] old-output.txt does not exist
-            exit 1
-          else
-            diff --color=always -pruN old-output.txt output.txt
           fi
+          diff --color=always -pruN old-output.txt output.txt
       - if: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@v3
         with:
