@@ -18,7 +18,7 @@ jobs:
         with:
           name: output1.txt
           path: old-output.txt
-      - run: diff -pruN old-output.txt output.txt; exit 0
+      - run: diff -pruN old-output.txt output.txt || exit 0
       - uses: actions/upload-artifact@v3
         with:
           name: output.txt
