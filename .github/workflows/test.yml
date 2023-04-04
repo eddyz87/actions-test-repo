@@ -14,27 +14,21 @@ jobs:
       - run: pwd
       - name: run it
         run: |
-          python3 main.py > output.txt
-          cat output.txt
+          python3 main.py | tee new-output.txt
       - uses: actions/cache@v3
         with:
           key: output.txt
-          path: old-output.txt
-      # - uses: actions/download-artifact@v3
-      #   continue-on-error: true
-      #   with:
-      #     name: output.txt
-      #     path: old-output.txt
+          path: output.txt
       - continue-on-error: true
         name: compare output
         run: |
           if [[ ! -e old-output.txt ]]; then
             echo [Error] old-output.txt does not exist
           fi
-          diff --color=always -pruN old-output.txt output.txt
+          diff --color=always -pruN output.txt new-output.txt
       - if: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@v3
         with:
           name: output.txt
-          path: output.txt
+          path: new-output.txt
           if-no-files-found: warn
