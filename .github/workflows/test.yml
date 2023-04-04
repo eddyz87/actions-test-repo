@@ -18,9 +18,12 @@ jobs:
         with:
           name: output.txt
           path: old-output.txt
-      - run: |
+      - continue-on-error: true
+        name: compare output
+        run: |
           if [[ ! -e old-output.txt ]]; then
-            echo [Warning] old-output.txt does not exist
+            echo [Error] old-output.txt does not exist
+            exit 1
           else
             diff --color=always -pruN old-output.txt output.txt
           fi
