@@ -25,7 +25,7 @@ jobs:
           [[ ! -e baseline.txt ]] && echo "[Error] No baseline"
           diff --color=always -pruN output.txt new-output.txt
       - if: ${{ github.event_name == 'push' }}
-        uses: actions/cache/restore@v3
+        uses: actions/cache/save@v3
         with:
           key: baseline.txt
           path: output.txt
