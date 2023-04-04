@@ -4,6 +4,6 @@ import sys
 
 print('Gona exit with code 0')
 print('and print a message!')
-print('bump3')
+print('bump4')
 
 sys.exit(0)
