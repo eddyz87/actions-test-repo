@@ -5,10 +5,16 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
+      - run: pwd
       - uses: actions/checkout@v3
       - name: setup python
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
       - run: pwd
-      - run: python3 main.py
+      - run: python3 main.py > output.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: output.txt
+          path: output.txt
+          if-no-files-found: warn
