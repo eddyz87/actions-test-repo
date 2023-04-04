@@ -32,6 +32,7 @@ jobs:
         name: compare output
         run: |
           diff --color=always -pruN ~/baseline.txt output.txt
+      - run: cp output.txt ~/baseline.txt
       # - if: ${{ github.event_name == 'push' }}
       #   uses: actions/cache/save@v3
       #   with:
