@@ -15,19 +15,26 @@ jobs:
       - name: run it
         run: |
           python3 main.py | tee output.txt
-      - uses: actions/cache/restore@v3
+      - name: update cache on every commit
+        uses: actions/cache@v3
         with:
-          key: baseline-txt
+          path: ~/baseline.txt
+          key: baseline-${{ runner.os }}-${{ github.run_id }}
           restore-keys: |
-            baseline-txt-
-          path: baseline.txt
+            baseline-${{ runner.os }}
+      # - uses: actions/cache/restore@v3
+      #   with:
+      #     key: baseline-txt
+      #     restore-keys: |
+      #       baseline-txt-
+      #     path: baseline.txt
       - continue-on-error: true
         name: compare output
         run: |
-          diff --color=always -pruN baseline.txt output.txt
-      - if: ${{ github.event_name == 'push' }}
-        uses: actions/cache/save@v3
-        with:
-          key: baseline-txt-${{ github.run_id }}
-          path: output.txt
+          diff --color=always -pruN ~/baseline.txt output.txt
+      # - if: ${{ github.event_name == 'push' }}
+      #   uses: actions/cache/save@v3
+      #   with:
+      #     key: baseline-txt-${{ github.run_id }}
+      #     path: output.txt
 
