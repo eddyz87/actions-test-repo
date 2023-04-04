@@ -27,7 +27,7 @@ jobs:
           diff --color=always -pruN ~/baseline.txt output.txt
       - if: ${{ github.event_name == 'push' }}
         run: cp output.txt ~/baseline.txt
-      - if: ${{ github.event_name == 'push' }}
+      - if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
         uses: actions/cache/save@v3
         with:
           key: baseline.txt-${{ github.run_id }}
