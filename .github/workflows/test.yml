@@ -19,7 +19,11 @@ jobs:
           name: output.txt
           path: old-output.txt
       - run: |
-          diff --color=always -pruN old-output.txt output.txt || exit 0
+          if [[ ! -e old-output.txt ]]; then
+            echo [Warning] old-output.txt does not exist
+          else
+            diff --color=always -pruN old-output.txt output.txt
+          fi
       - if: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@v3
         with:
