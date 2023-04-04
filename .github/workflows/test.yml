@@ -13,6 +13,11 @@ jobs:
           python-version: 3.11
       - run: pwd
       - run: python3 main.py > output.txt
+      - uses: actions/download-artifact@v3
+        with:
+          name: output1.txt
+          path: old-output.txt
+      - run: diff -pruN old-output.txt output.txt
       - uses: actions/upload-artifact@v3
         with:
           name: output.txt
