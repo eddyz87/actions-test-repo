@@ -14,7 +14,7 @@ jobs:
       - run: pwd
       - name: run it
         run: |
-          python3 main.py | tee new-output.txt
+          python3 main.py | tee output.txt
       - uses: actions/cache/restore@v3
         with:
           key: baseline.txt
