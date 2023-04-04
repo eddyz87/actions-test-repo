@@ -1,0 +1,13 @@
+name: test-workflow
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
+jobs:
+  run-tests:
+    rubs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup python
+        with:
+          python-version: 3.11
+      - run: pwd
+      - run: python3 main.py
