@@ -2,6 +2,6 @@
 
 import sys
 
-print('Gona exit with code 7')
+print('Gona exit with code 0')
 
-sys.exit(7)
+sys.exit(0)
