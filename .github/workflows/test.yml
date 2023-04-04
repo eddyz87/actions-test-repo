@@ -23,7 +23,7 @@ jobs:
         name: compare output
         run: |
           [[ ! -e baseline.txt ]] && echo "[Error] No baseline"
-          diff --color=always -pruN output.txt new-output.txt
+          diff --color=always -pruN baseline.txt output.txt
       - if: ${{ github.event_name == 'push' }}
         uses: actions/cache/save@v3
         with:
