@@ -24,7 +24,14 @@ jobs:
       - continue-on-error: true
         name: compare output
         run: |
-          diff --color=always -pruN ~/baseline.txt output.txt
+          diff --color=always -pruN ~/baseline.txt output.txt | tee the.diff
+      - name: add diff to summary
+        run: |
+          echo "Here is the diff:" >> $GITHUB_STEP_SUMMARY
+          echo ""                  >> $GITHUB_STEP_SUMMARY
+          echo '```diff'           >> $GITHUB_STEP_SUMMARY
+          cat the.diff             >> $GITHUB_STEP_SUMMARY
+          echo '```'               >> $GITHUB_STEP_SUMMARY
       - if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
         run: cp output.txt ~/baseline.txt
       - if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
