@@ -12,8 +12,20 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y qemu-kvm
         echo "::endgroup::"
+    - uses: actions/checkout@v3
     - name: env info
       shell: bash
       run: |
         id
         ls -l /dev/kvm
+        pwd
+        ls -lh
+    - name: run kvm
+      shell: bash
+      run: |
+        qemu-system-x86_64 \
+          -machine accel=kvm,type=q35 \
+          -kernel ./bzImage \
+          -nographic -m 128m \
+          -no-reboot \
+          -append 'console=ttyS0 panic=-1'
