@@ -23,7 +23,7 @@ jobs:
     - name: run kvm
       shell: bash
       run: |
-        qemu-system-x86_64 \
+        sudo qemu-system-x86_64 \
           -machine accel=kvm,type=q35 \
           -kernel ./bzImage \
           -nographic -m 128m \
